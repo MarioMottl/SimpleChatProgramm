@@ -1,9 +1,19 @@
+/*
+Author: Clemens Pruggmayer, Mario Mottl
+Class: 5BHEL
+*/
+
 #include "chatwithme.hpp"
 
+/*
+Function_name:
+    getoptions(...)
+Description:
+        A simple self written getopt() for easier usage
+        loops through all argv's and if a key is detected the following string will be used
+*/
 void getoptions(int argc, char **argv,user &u)
 {
-    //<chatwithme> <-k key> <-m my_msg_type> <-r rcvr_msg_type> <-u user_name>
-    //./chatwithme -k 12 -m 23 -r 34 -u KieselsteinKurt
     char argument[1024];
     for(int i = 1; i < argc-1; i++)
     {
@@ -27,11 +37,24 @@ void getoptions(int argc, char **argv,user &u)
     }
 }
 
+/*
+Function_name: 
+    user()
+Description:
+    Constructor of class user
+*/
 user::user()
 {
     return;
 }
 
+/*
+Function_name:
+    connect()
+Description:
+    connects the client to the server that is hosted on localhost
+    starts a thread for receiving any messages from the other participant
+*/
 bool user::connect()
 {
     bool success = (cppsock::tcp_client_connect(this->sock, nullptr, connection_port) == 0);
@@ -39,16 +62,35 @@ bool user::connect()
     return success;
 }
 
+/*
+Function_name:
+    debug()
+Description:
+    A simple debug message to see if getoptions(...) works as intented
+*/
 void user::debug()
 {
     std::cout<< "key: " << this->key <<"\n"<< "my_msg_type: " << this ->my_msg_type<<"\n"<< "rcvr_msg_type: " << this->rcvr_msg_type << "\n" << "user_name: " << this->user_name << std::endl;
 }
 
+/*
+Function_name:
+    send(...)
+Description:
+    Takes a message and sends it to the server, the server then forwards it to the 
+    other chat participant
+*/
 void user::send(const std::string &message)
 {
     this->sock.send(message.data(), message.size(), 0);
 }
 
+/*
+Function_name:
+    print_received(...)
+Description:
+    Prints the received messages into the console
+*/
 void print_received(user *u)
 {
     char buf[256];
@@ -59,17 +101,36 @@ void print_received(user *u)
     }
 }
 
+/*
+Function_name:
+    join()
+Description:
+    Joins the thread
+*/
 void user::join()
 {
     recv_thread.join();
 }
 
+/*
+Function_name:
+    disconnect()
+Description:
+    Disconnects the user from the server and closes the socket connection
+*/
 void user::disconnect(void)
 {
     this->sock.shutdown(SHUT_RDWR);
     this->sock.close();
 }
 
+/*
+Function_name:
+    main(...)
+Description:
+    Creates an user with the command line arguments, and handle the sending and
+    receiving of messages
+*/
 int main(int argc, char **argv)
 {
     user u;

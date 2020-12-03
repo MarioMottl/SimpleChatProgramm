@@ -1,3 +1,7 @@
+/*
+Author: Clemens Pruggmayer, Mario Mottl
+Class: 5BHEL
+*/
 #ifndef CHATWITHME_HPP_INCLUDED
 #define CHATWITHME_HPP_INCLUDED
 
@@ -37,5 +41,10 @@ class user
         void join();
 };
 void print_received(user*);
+
+/*
+A simple self written getopt()
+*/
+void getoptions(int argc, char **argv,user &u);
 
 #endif

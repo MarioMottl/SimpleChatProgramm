@@ -1,5 +1,12 @@
 #include "chatwithme.hpp"
 
+/*
+Function_name:
+    lo2cl(...)
+Description:
+    local to client
+    Handles sending and receiving between the connections
+*/
 void lo2cl(cppsock::socket *lo, cppsock::socket *cl)
 {
     char buf[256];
@@ -13,6 +20,15 @@ void lo2cl(cppsock::socket *lo, cppsock::socket *cl)
     cl->close();
     std::cout << "Disconnected" << std::endl;
 }
+
+/*
+Function_name:
+    lo2cl(...)
+Description:
+    client to local
+    Handles sending and receiving between the connections
+*/
+
 void cl2lo(cppsock::socket *lo, cppsock::socket *cl)
 {
     char buf[256];
@@ -31,6 +47,7 @@ int main()
 {
     int failcounter = 0;
     cppsock::socket listener, lo, cl;
+    //waits until the defined port is free
     while(tcp_server_setup(listener, nullptr, connection_port, 0) != 0)
     {
         //throw std::runtime_error("error setting up TCP server");
