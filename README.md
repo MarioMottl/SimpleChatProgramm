@@ -8,8 +8,12 @@ The code might not be up to programming standards.***
 
 ## Basic usage:
 ```
+make server
+make client
+
 ./server
 ./chatwithme <-k key> <-m my_msg_type> <-r rcvr_msg_type> <-u user_name>
+
 ```
 `key`, `my_msg_type`, `rcvr_msg_type` must be the same for both users to be able to chat with eachother.
 
