@@ -36,6 +36,6 @@ class user
         void disconnect(void);
         void join();
 };
-void print_received(cppsock::socket*);
+void print_received(user*);
 
 #endif

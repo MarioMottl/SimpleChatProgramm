@@ -3,6 +3,7 @@
 void getoptions(int argc, char **argv,user &u)
 {
     //<chatwithme> <-k key> <-m my_msg_type> <-r rcvr_msg_type> <-u user_name>
+    //./chatwithme -k 12 -m 23 -r 34 -u KieselsteinKurt
     char argument[1024];
     for(int i = 1; i < argc-1; i++)
     {
@@ -33,8 +34,9 @@ user::user()
 
 bool user::connect()
 {
-    recv_thread = std::thread(print_received, &this->sock);
-    return cppsock::tcp_client_connect(this->sock, nullptr, connection_port) == 0;
+    bool success = (cppsock::tcp_client_connect(this->sock, nullptr, connection_port) == 0);
+    recv_thread = std::thread(print_received, this);
+    return success;
 }
 
 void user::debug()
@@ -47,12 +49,13 @@ void user::send(const std::string &message)
     this->sock.send(message.data(), message.size(), 0);
 }
 
-void print_received(cppsock::socket *s)
+void print_received(user *u)
 {
-    char buf;
-    while(s->recv(&buf, sizeof(buf), 0) > 0)
+    char buf[256];
+    while(u->sock.recv(&buf, sizeof(buf), 0) > 0)
     {
-        std::cout << buf << std::endl;
+        std::cout <<"\rOther>> "<< buf << "                                          " << "\n" << u->user_name << ">> ";
+        std::cout.flush();
     }
 }
 
@@ -73,12 +76,22 @@ int main(int argc, char **argv)
     bool running = true;
     std::string input;
     getoptions(argc,argv,u);
-    u.debug();
     u.connect();
+    std::cout << u.user_name << ">> ";
     while(running)
     {
+        for(size_t i=0; i<input.size(); i++) input.at(i) = 0;
         std::getline(std::cin, input);
-        std::
+        if((input == "bye") || (input == "quit"))
+        {
+            u.disconnect();
+            running = false;
+        }
+        else
+        {
+            std::cout << u.user_name << ">> ";
+            u.send(input);
+        }
     }
     u.join();
 }
