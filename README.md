@@ -17,7 +17,7 @@ make client
 ```
 `key`, `my_msg_type`, `rcvr_msg_type` must be the same for both users to be able to chat with eachother.
 
-#### Example
+## Example
 ```
 chatwithme -k 9875 -m 54  -r 68 -u KieselsteinKurt
 chatwithme -k 9875 -m 68  -r 54 -u BergspitzenFranz
