@@ -16,6 +16,7 @@ make client
 
 ```
 `key`, `my_msg_type`, `rcvr_msg_type` must be the same for both users to be able to chat with eachother.
+
 `my_msg_type` will be compared with the `rcvr_msg_type` from the other user and vice versa.
 The comparison is handled on the server itself. 
 
