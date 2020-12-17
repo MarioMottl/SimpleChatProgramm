@@ -3,8 +3,8 @@
 ## Used Library:
  ### This programm was built using [CPPSOCK](https://github.com/PrugClem/cppsock).
 
-***A simple chat programm written by Clemens Pruggmayer, Mottl Mario for our programming class.
-The code might not be up to programming standards.***
+***A simple chat programm written by Clemens Pruggmayer, Mottl Mario for our programming class project.
+The code might not be up to the upmost programming standards.***
 
 ## Basic usage:
 ```
@@ -16,6 +16,8 @@ make client
 
 ```
 `key`, `my_msg_type`, `rcvr_msg_type` must be the same for both users to be able to chat with eachother.
+`my_msg_type` will be compared with the `rcvr_msg_type` from the other user and vice versa.
+The comparison is handled on the server itself. 
 
 ## Example
 ```
