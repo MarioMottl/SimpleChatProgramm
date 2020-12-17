@@ -5,6 +5,7 @@
 
 ***A simple chat programm written by Clemens Pruggmayer, Mottl Mario for our programming class project.
 The code might not be up to the upmost programming standards.***
+Documentation for this project will be uploaded. Documentation will only be avaiable in german.
 
 ## Basic usage:
 ```
