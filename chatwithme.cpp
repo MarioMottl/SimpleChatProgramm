@@ -58,6 +58,12 @@ Description:
 bool user::connect()
 {
     bool success = (cppsock::tcp_client_connect(this->sock, nullptr, connection_port) == 0);
+    if(!success) return false;
+    std::cout << "connected sucessfully" << std::endl;
+    //this->send(this->key + "\0" + this->my_msg_type + "\0" + this->rcvr_msg_type + "\0");
+    this->send(this->key);
+    this->send(this->my_msg_type);
+    this->send(this->rcvr_msg_type);
     recv_thread = std::thread(print_received, this);
     return success;
 }
@@ -82,7 +88,7 @@ Description:
 */
 void user::send(const std::string &message)
 {
-    this->sock.send(message.data(), message.size(), 0);
+    this->sock.send(message.data(), message.size()+1, 0);
 }
 
 /*

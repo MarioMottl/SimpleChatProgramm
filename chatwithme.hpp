@@ -9,13 +9,15 @@ Class: 5BHEL
 Include Files
 */
 #include "cppsock/cppsock.hpp"
+#include <unistd.h>
 #include <iostream>
+#include <utility>
+#include <atomic>
+#include <thread>
+#include <string>
 #include <deque>
 #include <map>
-#include <string>
-#include <thread>
-#include <unistd.h>
-#include <utility>
+#include <set>
 
 /*
 Definitions
